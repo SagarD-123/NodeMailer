@@ -42,6 +42,9 @@ async function main() {
     from: process.env.EMAIL_USER,
     to: "robertcena30@outlook.com",
     subject: "Testing, testing, 123",
+    attachments:[{filename: 'D.pdf',
+    path: './D.pdf',
+    cid: 'unique@gmail.com'}],
     html: `
     Dear [HR Manager's Name],<br>
 
