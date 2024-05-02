@@ -33,8 +33,10 @@ async function selectAndCustomizeTemplate(templateName, data) {
         // Use switch statement for template-specific replacements
         switch (templateName) {
             case "template":
-                customizedTemplate = customizedTemplate.replace("[HR Manager's Name]", data.managerName)
-                    .replace("[insert number of days]", data.numberOfDays)
+                emailData.recipients.forEach(recipient => {
+                    customizedTemplate = customizedTemplate.replace("[HR Manager's Name]", recipient.name);
+                });
+                customizedTemplate = customizedTemplate.replace("[insert number of days]", data.numberOfDays)
                     .replace("[insert date]", data.startDate)
                     .replace("[Your Name]", data.senderName);
                 break;
@@ -125,14 +127,36 @@ async function main() {
     const emailSubject = await promptUser("Enter the Subject for the email : ");
 
     //const emailSentTO = await promptUser("Enter the Email Address of receiver : ");
-    const emailRecipients = await promptUser("Enter the Email Addresses of receivers separated by comma: ");
-    const emailRecipientsArray = emailRecipients.split(",").map(email => email.trim());
+    // const emailRecipients = await promptUser("Enter the Email Addresses of receivers separated by comma: ");
+    // const emailRecipientsArray = emailRecipients.split(",").map(email => email.trim());
+
+    const emailRecipientsAndNames = await promptUser("Enter the Email Addresses and Names of recipients separated by comma (e.g., email1@example.com:Name1, email2@example.com:Name2): ");
+    const emailRecipientsAndNamesArray = emailRecipientsAndNames.split(",").map(entry => {
+        const [email, name] = entry.split(":");
+        return { email: email.trim(), name: name.trim() };
+    });
 
     // Define variables to store email data
-    let emailData = {};
+    let emailData = {
+        // Other properties...
+        recipients: emailRecipientsAndNamesArray
+    };
 
     // Customize email data based on selected template
     switch (templateName) {
+
+        case "template":
+            // Assuming there is a placeholder [Recipient's Name]
+          
+            emailData = {
+                // managerName: await promptUser("Enter the HR Manager's Name: "),
+                numberOfDays: await promptUser("Enter the number of days: "),
+                startDate: await promptUser("Enter the start date: "),
+                senderName: await promptUser("Enter your name: ")
+            };
+            
+            // Replace other placeholders as before
+            break;
         case "template":
             emailData = {
                 managerName: await promptUser("Enter the HR Manager's Name: "),

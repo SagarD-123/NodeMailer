@@ -1,13 +1,6 @@
-Dear [Employee's Name],
-
-On behalf of the entire team at [Company Name], I'd like to extend a warm welcome to you! We're thrilled to have you join us as [Employee's Position/Role], and we're confident that your expertise and enthusiasm will make valuable contributions to our organization.
-
-As you settle into your new role, please don't hesitate to reach out if you have any questions or need assistance. Our team is here to support you every step of the way.
-
-We'll be scheduling an orientation session for you to get acquainted with our company culture, policies, and procedures. In the meantime, feel free to explore our intranet and familiarize yourself with our various departments and projects.
-
-Once again, welcome aboard! We're excited to have you as part of the [Company Name] family.
-
-Best regards,
-[Your Name]
-[Your Position/Department]
+<p>Dear [Employee's Name],</p>
+<p>On behalf of the entire team at [Company Name], I'd like to extend a warm welcome to you! We're thrilled to have you join us as [Employee's Position/Role], and we're confident that your expertise and enthusiasm will make valuable contributions to our organization.</p>
+<p>As you settle into your new role, please don't hesitate to reach out if you have any questions or need assistance. Our team is here to support you every step of the way.</p>
+<p>We'll be scheduling an orientation session for you to get acquainted with our company culture, policies, and procedures. In the meantime, feel free to explore our intranet and familiarize yourself with our various departments and projects.</p>
+<p>Once again, welcome aboard! We're excited to have you as part of the [Company Name] family.</p>
+<p>Best regards,<br>[Your Name]<br>[Your Position/Department]</p>
