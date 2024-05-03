@@ -76,6 +76,7 @@ async function selectAndCustomizeTemplate(templateName, data) {
                 customizedTemplate = customizedTemplate.replace("[Employee's Name]", data.EmployeeName)
                     .replace("[Company Name]", data.CompanyName)
                     .replace("[Employee's Position/Role]", data.EmployeePosition)
+                    .replace("[Company Name]", data.CompanyName)
                     .replace("[Your Name]", data.senderName)
                     .replace("[Your Position/Department]", data.SenderPosition);
                 break;

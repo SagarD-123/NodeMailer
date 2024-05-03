@@ -3,7 +3,7 @@
     <p>Dear [Recipient's Name],</p>
     <p>I hope this email finds you well. As we approach the next phase of our project, I believe it's essential for us to touch base and discuss the progress we've made so far. Could we schedule a meeting sometime this week to review the current status, address any challenges, and plan our next steps? Your insights and expertise are invaluable to ensuring the success of this project.</p>
     <p>Please let me know your availability, and I'll coordinate a meeting time that works for both of us.</p>
-    <p>Looking forward to our discussion.</p>
+    <p>Looking forward to our discussion.[Dynamic Data]</p>
     <p>Best regards,<br>[Your Name]</p>
   </body>
 </html>

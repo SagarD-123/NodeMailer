@@ -4,7 +4,7 @@ const fs = require("fs").promises; // Importing the 'fs' module to read files
 const readline = require("readline"); // Importing 'readline' module for user input
 
 // Function to select and customize the appropriate template
-async function selectAndCustomizeTemplate(templateName, recipientData, emailSubject) {
+async function selectAndCustomizeTemplate(templateName, recipientData) {
     const templatePath = `./email_templates/${templateName}.txt`;
 
     try {
@@ -20,7 +20,7 @@ async function selectAndCustomizeTemplate(templateName, recipientData, emailSubj
                 .replace("[Your Name]", recipient.senderName);
 
             // Send email for each recipient
-            await sendEmail(recipient.email, customizedTemplate, emailSubject);
+            await sendEmail(recipient.email, templateWithRecipientData);
         }
     } catch (error) {
         throw new Error(`Error reading template file: ${error}`);
@@ -28,7 +28,7 @@ async function selectAndCustomizeTemplate(templateName, recipientData, emailSubj
 }
 
 // Function to send email
-async function sendEmail(recipientEmail, customizedTemplate, emailSubject) {
+async function sendEmail(recipientEmail, customizedTemplate) {
     // Create nodemailer transporter
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -45,7 +45,7 @@ async function sendEmail(recipientEmail, customizedTemplate, emailSubject) {
         let info = await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: recipientEmail,
-            subject: emailSubject, // Use the provided email subject
+            subject: "Email Subject", // Customize the subject if needed
             html: customizedTemplate,
         });
         console.log(`Email sent to ${recipientEmail}: ${info.messageId}`);
@@ -75,7 +75,7 @@ async function main() {
     const templateName = await promptUser("Enter the name of the template you want to use (e.g., template): ");
 
     // Prompt user for email subject
-    const emailSubject = await promptUser("Enter the Subject for the email: ");
+    // const emailSubject = await promptUser("Enter the Subject for the email: ");
 
     // Prompt user for recipient's email addresses and names
     const recipientData = [];
@@ -90,7 +90,7 @@ async function main() {
 
     try {
         // Select and customize the appropriate template for each recipient
-        await selectAndCustomizeTemplate(templateName, recipientData, emailSubject);
+        await selectAndCustomizeTemplate(templateName, recipientData);
     } catch (error) {
         console.error("Error:", error);
     }
