@@ -1,31 +1,35 @@
 require('dotenv').config();
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const nodemailer = require('nodemailer');
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  host: `localhost`,
+  user:  `root`,
+  password: `Swastik@123`,
+  database: `demo`
 });
 
 async function fetchEmailAddresses() {
   return new Promise((resolve, reject) => {
-    pool.query('SELECT email FROM recipients', (error, results) => {
+    pool.query('SELECT email_id FROM data', (error, results) => {
       if (error) {
         reject(error);
       } else {
+        console.log("Fetched email addresses:", results);
         resolve(results);
       }
     });
   });
 }
 
+
 async function sendEmails() {
   try {
     const recipients = await fetchEmailAddresses();
+    console.log("Recipients:", recipients); // Add this line for debugging
+    
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 587,
@@ -40,7 +44,7 @@ async function sendEmails() {
     for (let i = 0; i < recipients.length; i++) {
       let info = await transporter.sendMail({
         from: process.env.EMAIL_USER,
-        to: recipients[i].email,
+        to: recipients[i].email_id,
         subject: "Testing, testing, 123",
         html: `
           Dear [HR Manager's Name],<br>
@@ -52,11 +56,16 @@ async function sendEmails() {
         `,
       });
 
-      console.log(`Email sent to ${recipients[i].email}: ${info.messageId}`);
+      console.log(`Email sent to ${recipients[i].email_id}: ${info.messageId}`);
     }
   } catch (error) {
     console.error("Error:", error);
+  } finally {
+    // Close the MySQL connection pool
+    pool.end();
+    console.log("MySQL connection pool closed.");
   }
 }
+
 
 sendEmails();

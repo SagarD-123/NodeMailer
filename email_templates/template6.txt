@@ -1,6 +1,35 @@
-<p>Dear [Employee's Name],</p>
-<p>On behalf of the entire team at [Company Name], I'd like to extend a warm welcome to you! We're thrilled to have you join us as [Employee's Position/Role], and we're confident that your expertise and enthusiasm will make valuable contributions to our organization.</p>
-<p>As you settle into your new role, please don't hesitate to reach out if you have any questions or need assistance. Our team is here to support you every step of the way.</p>
-<p>We'll be scheduling an orientation session for you to get acquainted with our company culture, policies, and procedures. In the meantime, feel free to explore our intranet and familiarize yourself with our various departments and projects.</p>
-<p>Once again, welcome aboard! We're excited to have you as part of the [Company Name] family.</p>
-<p>Best regards,<br>[Your Name]<br>[Your Position/Department]</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Achievement</title>
+</head>
+<body style=" font-family: "Poetsen One", sans-serif;">
+
+    <table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse;">
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td style="background-color: #007bff; padding: 20px; color: white; text-align: center;">
+                            <h1>Certificate of Achievement</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 20px;">
+                            <p>Congratulations!</p>
+                            <p>This is to certify that <strong>[Recipient Name]</strong> has successfully completed the course on <strong>[Course Title]</strong> with a score of <strong>[Score]</strong>.</p>
+                            <p>Issued on: <strong>[Date]</strong></p>
+                            <p>Issued by: <strong>[Issuer Name]</strong></p>
+                            <p>For more information, please contact <a href="mailto:contact@example.com">contact@cdac.com</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
+

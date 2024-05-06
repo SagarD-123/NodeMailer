@@ -4,7 +4,7 @@ const fs = require("fs").promises; // Importing the 'fs' module to read files
 const readline = require("readline"); // Importing 'readline' module for user input
 
 // Function to select and customize the appropriate template
-async function selectAndCustomizeTemplate(templateName, recipientData) {
+async function selectAndCustomizeTemplate(templateName, recipientData, emailSubject) {
     const templatePath = `./email_templates/${templateName}.txt`;
 
     try {
@@ -62,11 +62,11 @@ async function selectAndCustomizeTemplate(templateName, recipientData) {
                     break;
                 case "template6":
                     templateWithRecipientData = templateWithRecipientData.replace("[Recipient's Email]", recipient.email)
-                        .replace("[Employee's Name]", recipient.name)
-                        .replace("[Company Name]", recipient.CompanyName)
-                        .replace("[Employee's Position/Role]", recipient.EmployeePosition)
-                        .replace("[Your Name]", recipient.senderName)
-                        .replace("[Your Position/Department]", recipient.senderPosition);
+                        .replace("[Recipient Name]", recipient.name)
+                        .replace("[Course Title]", recipient.CourseTitle)
+                        .replace("[Score]", recipient.Score)
+                        .replace("[Date]", recipient.DateOfIssue)
+                        .replace("[Issuer Name]", recipient.senderName);
                     break;
 
                 default:
@@ -78,7 +78,7 @@ async function selectAndCustomizeTemplate(templateName, recipientData) {
             //     .replace("[Your Name]", recipient.senderName);
 
             // Send email for each recipient
-            await sendEmail(recipient.email, templateWithRecipientData);
+            await sendEmail(recipient.email, templateWithRecipientData, emailSubject);
         }
     } catch (error) {
         throw new Error(`Error reading template file: ${error}`);
@@ -108,7 +108,7 @@ async function main() {
     const templateName = await promptUser("Enter the name of the template you want to use (e.g., template): ");
 
     // Prompt user for email subject
-    // const emailSubject = await promptUser("Enter the Subject for the email: ");
+    const emailSubject = await promptUser("Enter the Subject for the email: ");
 
     // Prompt user for recipient's email addresses and names
     const recipientData = [];
@@ -170,11 +170,12 @@ async function main() {
             case "template6":
                 const recipientEmail6 = await promptUser(`Enter the Email Address of recipient ${i + 1}: `);
                 const recipientName6 = await promptUser(`Enter the Name of recipient ${i + 1}: `);
-                const CompanyName = await promptUser(`Enter the Name the company for recipient ${i + 1}: `);
-                const EmployeePosition = await promptUser(`Enter the Position for recipient ${i + 1}: `);
-                const senderName6 = await promptUser(`Enter the sender Name ${i + 1}: `);
-                const senderPosition = await promptUser(`Enter the sender Position : `);
-                recipientData.push({ email: recipientEmail6, name: recipientName6, CompanyName: CompanyName,EmployeePosition: EmployeePosition, senderName: senderName6 , senderPosition: senderPosition });
+                const CourseTitle = await promptUser(`Enter the Title of Course for recipient ${i + 1}: `);
+                const Score = await promptUser(`Enter the Score for recipient ${i + 1}: `);
+                const DateOfIssue = await promptUser(`Enter the Date of issue for recipient ${i + 1}: `);
+                const senderName6 = await promptUser(`Enter the Issuer Name ${i + 1}: `);
+                // const senderPosition = await promptUser(`Enter the sender Position : `);
+                recipientData.push({ email: recipientEmail6, name: recipientName6, CourseTitle: CourseTitle, Score: Score, DateOfIssue: DateOfIssue, senderName: senderName6, });
                 break;
             default:
                 break;
@@ -189,12 +190,12 @@ async function main() {
 
     try {
         // Select and customize the appropriate template for each recipient
-        await selectAndCustomizeTemplate(templateName, recipientData);
+        await selectAndCustomizeTemplate(templateName, recipientData, emailSubject);
     } catch (error) {
         console.error("Error:", error);
     }
 }
-async function sendEmail(recipientEmail, customizedTemplate) {
+async function sendEmail(recipientEmail, customizedTemplate, emailSubject) {
     // Create nodemailer transporter
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -208,11 +209,18 @@ async function sendEmail(recipientEmail, customizedTemplate) {
 
     try {
         // Send the email using the customized template
+
+        // const certificateAttachment = {
+        //     filename: 'certificate.pdf', // Change the filename as needed
+        //     path: 'path/to/certificate.pdf', // Replace with the actual path to your PDF certificate file
+        //     contentType: 'application/pdf'
+        // };
         let info = await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: recipientEmail,
-            subject: "Email Subject", // Customize the subject if needed
-            html: customizedTemplate,
+            subject: emailSubject, //"Email Subject", // Customize the subject if needed
+            html: customizedTemplate
+            // attachments: [certificateAttachment]
         });
         console.log(`Email sent to ${recipientEmail}: ${info.messageId}`);
     } catch (error) {

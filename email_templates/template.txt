@@ -1,10 +1,14 @@
-Dear [HR Manager's Name],<br>
-
-I hope this message finds you well. I am writing to inform you that I am feeling unwell and unable to come into work today. Due to my condition, I would like to request sick leave for [insert number of days] days, starting from today, [insert date]. <br>
-
-I will make sure to provide any necessary documentation from my healthcare provider upon my return to work. In the meantime, I will ensure that any urgent tasks are delegated appropriately to ensure minimal disruption to the team's workflow. <br>
-
-Thank you for your understanding and assistance in this matter. Please let me know if there are any further steps I need to take or if you require any additional information.<br>
-
-Best regards,<br>
-[Your Name]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+</head>
+<body>
+    <p>Dear [Student Name],</p>
+    <p>This is the certificate for completion of course.</p>
+    <p>PFA certificate.</p>
+    <p>Regards,<br>Administration</p>
+</body>
+</html>
