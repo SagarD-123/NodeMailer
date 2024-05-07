@@ -13,10 +13,10 @@ const pool = mysql.createPool({
     database: `demo`
 });
 
-// Function to fetch email addresses and names from MySQL
+// Function to fetch email addresses and names from MySQLasync function fetchRecipients() {
 async function fetchRecipients() {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT name, email_id FROM data', (error, results) => {
+        pool.query('SELECT name, email_id, pdf_path, pdf_name FROM data', (error, results) => {
             if (error) {
                 reject(error);
             } else {
@@ -26,6 +26,7 @@ async function fetchRecipients() {
         });
     });
 }
+
 
 // Function to customize email template with recipient data
 async function customizeTemplate(templateName, recipient) {
@@ -41,9 +42,9 @@ async function customizeTemplate(templateName, recipient) {
             case "template":
                 customizedTemplate = customizedTemplate
                     .replace("[Student Name]", recipient.name);
-                    // .replace("[insert number of days]", recipient.numberOfDays)
-                    // .replace("[insert date]", recipient.startdate)
-                    // .replace("[Your Name]", recipient.senderName);
+                // .replace("[insert number of days]", recipient.numberOfDays)
+                // .replace("[insert date]", recipient.startdate)
+                // .replace("[Your Name]", recipient.senderName);
                 break;
             // Add cases for other templates as needed
             default:
@@ -57,7 +58,7 @@ async function customizeTemplate(templateName, recipient) {
 }
 
 // Function to send email
-async function sendEmail(recipientEmail, recipientName, customizedTemplate, emailSubject) {
+async function sendEmailWithAttachment(recipientEmail, recipientName, customizedTemplate, emailSubject, pdf_Path, pdf_name) {
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
@@ -73,13 +74,18 @@ async function sendEmail(recipientEmail, recipientName, customizedTemplate, emai
             from: process.env.EMAIL_USER,
             to: recipientEmail,
             subject: emailSubject,
-            html: customizedTemplate
+            html: customizedTemplate,
+            attachments: [{
+                filename: pdf_name, // Filename of the attachment as seen by the recipient
+                path: pdf_Path // Path to the PDF file
+            }]
         });
         console.log(`Email sent to ${recipientEmail}: ${info.messageId}`);
     } catch (error) {
         console.error(`Error sending email to ${recipientEmail}:`, error);
     }
 }
+
 
 // Function to prompt the user for input
 function promptUser(question) {
@@ -110,7 +116,7 @@ async function main() {
         // Customize and send email for each recipient
         for (const recipient of recipients) {
             const customizedTemplate = await customizeTemplate(templateName, recipient);
-            await sendEmail(recipient.email_id, recipient.name, customizedTemplate, emailSubject);
+            await sendEmailWithAttachment(recipient.email_id, recipient.name, customizedTemplate, emailSubject, recipient.pdf_path);
         }
     } catch (error) {
         console.error("Error:", error);
@@ -120,5 +126,4 @@ async function main() {
         console.log("MySQL connection pool closed.");
     }
 }
-
 main().catch(console.error);
